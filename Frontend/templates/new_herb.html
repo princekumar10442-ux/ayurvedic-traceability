@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Create Batch | Ayurvedic Traceability{% endblock %}
+
+{% block content %}
+  <section class="two-column-layout">
+    <div class="surface intro-card">
+      <span class="eyebrow">Batch creation</span>
+      <h1>Register a fresh herb lot with source-level detail.</h1>
+      <p class="hero-copy">
+        Start the traceability trail with the core details that downstream processors and labs will rely on.
+      </p>
+      <div class="check-list">
+        <div>Capture herb identity and place of origin.</div>
+        <div>Lock the harvest date into the ledger.</div>
+        <div>Assign the farmer reference used throughout the chain.</div>
+      </div>
+    </div>
+
+    <div class="surface form-panel">
+      <div class="section-heading">
+        <span class="eyebrow">New herb intake</span>
+        <h2>Create blockchain entry</h2>
+      </div>
+
+      <form action="{{ url_for('add_herb') }}" method="POST" class="stack-form">
+        <label class="field">
+          <span>Herb name</span>
+          <input type="text" name="herb_name" placeholder="Ashwagandha" required>
+        </label>
+        <label class="field">
+          <span>Origin</span>
+          <input type="text" name="origin" placeholder="Madhya Pradesh, India" required>
+        </label>
+        <label class="field">
+          <span>Harvest date</span>
+          <input type="date" name="harvest_date" required>
+        </label>
+        <label class="field">
+          <span>Farmer ID</span>
+          <input type="text" name="farmer_id" placeholder="FARM-2026-14" required>
+        </label>
+        <button type="submit" class="button button-primary button-block">Create batch record</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

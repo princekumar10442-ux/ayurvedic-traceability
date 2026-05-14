@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Update Batch | Ayurvedic Traceability{% endblock %}
+
+{% block content %}
+  <section class="two-column-layout">
+    <div class="surface intro-card">
+      <span class="eyebrow">Supply chain updates</span>
+      <h1>Advance a herb batch through processing, testing, and sale readiness.</h1>
+      <p class="hero-copy">
+        Enter the batch ID and enrich the record with the details added at each operational checkpoint.
+      </p>
+
+      <div class="timeline-card">
+        <div>
+          <strong>1. Processor</strong>
+          <p>Attach the processor reference after harvest handling or transformation.</p>
+        </div>
+        <div>
+          <strong>2. Lab</strong>
+          <p>Record laboratory ownership and testing notes for verification.</p>
+        </div>
+        <div>
+          <strong>3. Finalize</strong>
+          <p>Generate a QR-backed consumer verification record from the latest batch state.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="surface form-panel">
+      <div class="section-heading">
+        <span class="eyebrow">Traceability form</span>
+        <h2>Update existing herb</h2>
+      </div>
+
+      <form action="{{ url_for('update_step') }}" method="POST" class="stack-form">
+        <label class="field">
+          <span>Workflow step</span>
+          <select name="step" id="step" required>
+            <option value="processor">Processor update</option>
+            <option value="lab">Lab update</option>
+            <option value="finalize">Finalize for consumer</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Herb ID</span>
+          <input type="text" name="herb_id" placeholder="Paste the generated batch ID" required>
+        </label>
+        <label class="field">
+          <span>Processor ID</span>
+          <input type="text" name="processor_id" placeholder="Required for processing step">
+        </label>
+        <label class="field">
+          <span>Lab ID</span>
+          <input type="text" name="lab_id" placeholder="Required for lab and finalization">
+        </label>
+        <label class="field">
+          <span>Test results</span>
+          <input type="text" name="test_results" placeholder="Purity passed, moisture 7.1%, etc.">
+        </label>
+
+        <button type="submit" class="button button-primary button-block">Save blockchain update</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

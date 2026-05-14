@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Ayurvedic Traceability{% endblock %}
+
+{% block content %}
+  <section class="hero-layout">
+    <div class="hero-panel">
+      <span class="eyebrow">{{ role_details.eyebrow }}</span>
+      <h1>{{ role_details.label }} control center</h1>
+      <p class="hero-copy">{{ role_details.summary }}</p>
+
+      <div class="stat-grid">
+        <article class="stat-card">
+          <span>Total blocks</span>
+          <strong>{{ total_blocks }}</strong>
+          <small>Including the genesis block</small>
+        </article>
+        <article class="stat-card">
+          <span>Tracked herbs</span>
+          <strong>{{ tracked_herbs }}</strong>
+          <small>Unique batch IDs recorded</small>
+        </article>
+      </div>
+    </div>
+
+    <div class="surface action-panel">
+      <div class="section-heading">
+        <span class="eyebrow">Quick actions</span>
+        <h2>Move the supply chain forward</h2>
+        <p>Choose the next workflow based on your role.</p>
+      </div>
+
+      <div class="action-grid">
+        {% if role == 'farmer' %}
+          <a href="{{ url_for('new_herb_form') }}" class="feature-card">
+            <strong>Create new batch</strong>
+            <p>Register herb identity, origin, harvest date, and farmer ownership.</p>
+          </a>
+        {% endif %}
+        <a href="{{ url_for('update_herb_form') }}" class="feature-card">
+          <strong>Update existing batch</strong>
+          <p>Add processor details, lab results, or finalize the consumer-ready record.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="surface ledger-panel">
+    <div class="section-heading section-heading-row">
+      <div>
+        <span class="eyebrow">Recent activity</span>
+        <h2>Latest blockchain transactions</h2>
+      </div>
+      <p class="muted-copy">The newest entries appear first.</p>
+    </div>
+
+    {% if recent_transactions %}
+      <div class="ledger-grid">
+        {% for tx in recent_transactions %}
+          <article class="ledger-card">
+            <div class="ledger-row">
+              <span class="status-pill">{{ tx.current_status.replace('_', ' ') }}</span>
+              <code>{{ tx.herb_id }}</code>
+            </div>
+            <h3>{{ tx.herb_name }}</h3>
+            <p>{{ tx.origin }} • Harvested {{ tx.harvest_date }}</p>
+            <dl class="detail-list">
+              <div>
+                <dt>Farmer</dt>
+                <dd>{{ tx.farmer_id or 'Pending' }}</dd>
+              </div>
+              <div>
+                <dt>Processor</dt>
+                <dd>{{ tx.processor_id or 'Pending' }}</dd>
+              </div>
+              <div>
+                <dt>Lab</dt>
+                <dd>{{ tx.lab_id or 'Pending' }}</dd>
+              </div>
+            </dl>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <h3>No traceability records yet</h3>
+        <p>Create the first herb batch to start building the ledger.</p>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

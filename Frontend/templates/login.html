@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Login | Ayurvedic Traceability{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+  <section class="hero-layout auth-layout">
+    <div class="hero-panel">
+      <span class="eyebrow">Chain of trust</span>
+      <h1>Trace each herb from harvest to shelf with a calmer, clearer workflow.</h1>
+      <p class="hero-copy">
+        This dashboard records origin, processing, lab validation, and final verification in one uninterrupted chain.
+      </p>
+      <div class="hero-points">
+        <div class="info-chip">Origin logging</div>
+        <div class="info-chip">Stage-by-stage updates</div>
+        <div class="info-chip">Final QR verification</div>
+      </div>
+    </div>
+
+    <div class="surface auth-card">
+      <div class="section-heading">
+        <span class="eyebrow">Project access</span>
+        <h2>Sign in</h2>
+        <p>Use one of the demo accounts to explore the farmer, processor, or lab journey.</p>
+      </div>
+
+      <form action="{{ url_for('login') }}" method="POST" class="stack-form">
+        <label class="field">
+          <span>Username</span>
+          <input type="text" name="username" placeholder="farmer1" required>
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" placeholder="Enter password" required>
+        </label>
+        <button type="submit" class="button button-primary button-block">Enter dashboard</button>
+      </form>
+
+      <div class="credential-grid">
+        <div>
+          <strong>Farmer</strong>
+          <p>`farmer1` / `farmer123`</p>
+        </div>
+        <div>
+          <strong>Processor</strong>
+          <p>`processor1` / `proc123`</p>
+        </div>
+        <div>
+          <strong>Lab</strong>
+          <p>`lab1` / `lab123`</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

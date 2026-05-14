@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Traceability Record | Ayurvedic Traceability{% endblock %}
+
+{% block content %}
+  <section class="record-layout">
+    <div class="surface record-hero">
+      <span class="eyebrow">Blockchain snapshot</span>
+      <h1>{{ headline or "Traceability Updated" }}</h1>
+      <p class="hero-copy">{{ description or "The latest herb record is now available for review." }}</p>
+
+      {% if highlight_id %}
+        <div class="highlight-box">
+          <span>Herb ID</span>
+          <strong>{{ highlight_id }}</strong>
+        </div>
+      {% endif %}
+
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span>Block index</span>
+          <strong>{{ block.index }}</strong>
+        </article>
+        <article class="summary-card">
+          <span>Transactions</span>
+          <strong>{{ block.transactions | length }}</strong>
+        </article>
+        <article class="summary-card">
+          <span>Proof</span>
+          <strong>{{ block.proof }}</strong>
+        </article>
+      </div>
+    </div>
+
+    <div class="surface qr-panel">
+      {% if qr_code %}
+        <span class="eyebrow">Consumer verification</span>
+        <h2>QR code generated</h2>
+        <p>Scan this code to inspect the finalized blockchain payload.</p>
+        <img src="{{ url_for('static', filename=qr_code) }}" class="qr-image" alt="Herb QR Code">
+      {% else %}
+        <span class="eyebrow">Next milestone</span>
+        <h2>QR pending</h2>
+        <p>The QR code will be created once the batch reaches the final consumer-ready stage.</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="surface ledger-panel">
+    <div class="section-heading section-heading-row">
+      <div>
+        <span class="eyebrow">Raw traceability data</span>
+        <h2>Full block payload</h2>
+      </div>
+      <a href="{{ url_for('dashboard_default') }}" class="button button-secondary">Back to dashboard</a>
+    </div>
+
+    <div class="trace-box">
+      <pre>{{ block | tojson(indent=2) }}</pre>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Ayurvedic Traceability{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="page-shell">
+    <div class="page-glow page-glow-a"></div>
+    <div class="page-glow page-glow-b"></div>
+
+    {% if session.get('role') %}
+      <header class="topbar">
+        <a href="{{ url_for('dashboard_default') }}" class="brand">
+          <span class="brand-mark">AT</span>
+          <span>
+            <strong>Ayurvedic Traceability</strong>
+            <small>Blockchain-backed herb lifecycle</small>
+          </span>
+        </a>
+        <nav class="topbar-actions">
+          <a href="{{ url_for('dashboard_default') }}" class="text-link">Dashboard</a>
+          <a href="{{ url_for('update_herb_form') }}" class="text-link">Update Batch</a>
+          {% if session.get('role') == 'farmer' %}
+            <a href="{{ url_for('new_herb_form') }}" class="button button-secondary">New Batch</a>
+          {% endif %}
+          <a href="{{ url_for('logout') }}" class="button button-ghost">Logout</a>
+        </nav>
+      </header>
+    {% endif %}
+
+    <main class="page-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-stack">
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
